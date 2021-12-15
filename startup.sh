@@ -5,6 +5,8 @@ unzip ovpn_configs.zip -d ovpn_configs
 cd ovpn_configs
 VPN_FILE=$(ls "${SURFSHARK_COUNTRY}"* | grep "${SURFSHARK_CITY}" | grep "${CONNECTION_TYPE}" | shuf | head -n 1)
 echo Chose: ${VPN_FILE}
+sed '/^group openvpn=.*/a after=nobind' ${VPN_FILE}
+sed '/^auth-nocache=.*/a after=auth-user-pass' ${VPN_FILE}
 printf "${SURFSHARK_USER}\n${SURFSHARK_PASSWORD}" > vpn-auth.txt
 
 if [ -n ${LAN_NETWORK}  ]
